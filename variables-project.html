@@ -1,0 +1,54 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+
+<head>
+    <title>Processing Template</title>
+    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.4.13/addons/p5.dom.js"></script>-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.4.13/p5.js"></script>
+    <script>
+        //Declare Variables
+        var centerX;
+        var centerY;
+        var scale;
+        var red;
+        var green;
+        var blue;
+        var alpha;
+
+        function setup() {
+            createCanvas(random(400, 800), 200); //canvas size
+            noStroke();
+            centerX = 0; //X-value start location
+            centerY = height / 2; //Y-value start location, dependent on height
+            scale = 0.1; //dilation of shape
+            alpha = 255; //opacity or transparency
+
+            //Setting color random when page reloaded
+            red = random(150, 250); //red
+            green = random(150, 250); //green
+            blue = random(100, 250); //blue
+
+        }
+
+        function draw() {
+            background(red, green, blue); //color of background after reloaded
+            fill(0, alpha); //color of the shape
+
+            //Update Variables
+            scale += 0.001; //dilation-size
+            alpha -= random(0.1, 0.2); //fade
+            centerX++; //translation from left to right
+
+            //Mickey Mouse Shape
+            ellipse(centerX - scale * 100, centerY - scale * 100, scale * 100, scale * 100); //left ear
+            ellipse(centerX + scale * 100, centerY - scale * 100, scale * 100, scale * 100); //right ear
+            ellipse(centerX, centerY, scale * 200, scale * 200); //head
+        }
+    </script>
+</head>
+
+<body>
+
+</body>
+
+</html>
