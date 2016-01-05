@@ -1,0 +1,155 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+
+<head>
+    <title>Pong Remix By: Kelly Lai</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.4.13/p5.js"></script>
+    <script>
+        // global variables, able to be used in all functions
+        var ballX; // x-location of the ball
+        var ballY; // y-location of the ball
+        var ballSpeedX = 0; // speed of the ball horizontally
+        var ballSpeedY = 0; // speed of the ball vertically
+        var paddleHeight = 10; // height of the paddle
+        var paddleWidth; // width of the paddle
+        var r, g, b; //color of background
+        var scoreNum = 0; //amount of points scored
+        var livesNum = 5; //number of lives begins with
+        var paddleX; // x-location of the paddle
+
+        function setup() {
+            createCanvas(700, 500); // canvas size
+            noCursor(); // hides the mouse
+            paddleWidth = 200; // paddle width
+            r = random(100, 250); // red
+            g = random(100, 250); // green
+            b = random(100, 250); // blue
+
+        }
+
+        function mousePressed() {
+            // Remix 1 = Random initial ball location
+            ballX = random(width); // start the ball on
+            ballY = 0; // the top of the canvas
+            ballSpeedX = 5; // starting speed
+            ballSpeedY = 5; // of the ball
+        }
+
+
+        function draw() {
+            background(r, g, b); // resets the background
+            startGame(); // informs user to start the game
+            drawBall(); // re-draws ball 
+            moveBall(); // ball moves in X and Y directions
+            drawPaddle(); // re-draws paddle
+            checkCollide(); // checks for collision with walls or paddle
+            // Remix 2 = Score on screen
+            score(); // update score
+            // Remix 3 = # of lives
+            lives(); // update lives
+            endGame(); // checks when there's no more lives
+
+        }
+
+        function startGame() {
+            if (ballSpeedX == 0 && ballSpeedY == 0) { // checks if mouse is not pressed
+                fill(255); // color(White)
+                textSize(25); // size
+                textAlign(CENTER); // set coordinates as the center of text
+                text("Press here to Start! ^O^", width / 2, height / 2); // print Press to Start! in the middle of the canvas
+            }
+        }
+
+        function drawBall() {
+            noStroke(); // no border
+            ellipse(ballX, ballY, 20, 20); // draw a small ball at the current (x,y) location
+
+        }
+
+        function moveBall() {
+            ballX = ballX + ballSpeedX; // updates ball location horizontally
+            ballY = ballY + ballSpeedY; // updates ball location vertically
+
+            // monitor speed/direction of ball
+            console.log("ballSpeedX: " + ballSpeedX + ", ballSpeedY: " + ballSpeedY);
+        }
+
+        function drawPaddle() {
+            noStroke(); // no border
+            // Remix 4 = mouse controls middle of the paddle
+            rectMode(CENTER); // set coordinates as the center of the rectangle
+            paddleX = mouseX; // set mouseX as the x-location of the paddle
+            paddleX = constrain(paddleX, 0, width); // keeps the paddle inside of the canvas
+            rect(paddleX, height - paddleHeight / 2, paddleWidth, paddleHeight); // rectangle y-value is always at the bottom, but shifted up half the height of paddle
+        }
+
+        function checkCollide() {
+            // left/right edges
+            if (ballX < 0 || ballX > width) {
+                ballSpeedX = ballSpeedX * -1; // switch X direction
+                // Remix 5 = Change background color after ball touches any edges
+                r = random(100, 250); // changes
+                g = random(100, 250); // the color
+                b = random(100, 250); // of the background
+            }
+
+            // top edge
+            if (ballY < 0) {
+                ballSpeedY = ballSpeedY * -1; // switch Y direction
+                r = random(100, 250); // changes
+                g = random(100, 250); // the color
+                b = random(100, 250); // of the background
+            }
+
+            // paddle
+            if (ballY > height - paddleHeight) { // ball is past 'goal line' vertically
+                if (ballX >= mouseX - paddleWidth / 2 && ballX <= mouseX + paddleWidth / 2) { // ball is within paddle horizontally
+                    // Remix 6 = Ball speeds up after collision
+                    ballSpeedY += 0.25; // increase the
+                    ballSpeedX += 0.25; // speed of the ball
+                    ballSpeedY = ballSpeedY * -1; // switch Y direction
+                    // Remix 7 = Paddle gets shorter after collision
+                    paddleWidth = paddleWidth - 15; //paddle shrink
+                    scoreNum++; // add 1 to score
+                }
+                else { // ball is on the left or right side of the paddle
+                    livesNum--; // subtract 1 life
+                    ballX = random(width); // set the ball
+                    ballY = 0; // to its starting position
+                    //Remix 8 = reset paddle width after one life is taken away
+                    paddleWidth = 200; // paddle returns to starting width
+                }
+            }
+        }
+
+        function score() {
+            fill(255); // color(white)
+            textSize(25); // size
+            text("Score: " + scoreNum, 50, 50); // displays current score
+        }
+
+        function lives() {
+            fill(255); // color(white)
+            textSize(25); // size
+            text("Lives: " + livesNum, 50, 90); // displays amount of lives remain
+        }
+
+        function endGame() {
+            if (livesNum <= 0) { // checks when no lives remain
+                fill(255); // color(white)
+                textSize(25); // size
+                textAlign(CENTER); // set coordinates as the center of text
+                text("GAME OVER! >3< Please Try Again!", width / 2, height / 2); // print GAME OVER! in the middle of the canvas
+                text("Great Job! ^-^ Your Final Score is: " + scoreNum, width / 2, height / 1.5); // informs the player their final score
+                noLoop(); // stop the draw loop
+
+            }
+        }
+    </script>
+</head>
+
+<body>
+
+</body>
+
+</html>
