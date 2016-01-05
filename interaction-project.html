@@ -1,0 +1,75 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+
+<head>
+    <title>Processing Template</title>
+    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.4.13/addons/p5.dom.js"></script>-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.4.13/p5.js"></script>
+    <script>
+        function setup() {
+            createCanvas(400, 400); //Canvas Size
+
+        }
+
+        function draw() {
+            //Star
+            stroke(255); //Color of star(white)
+            strokeWeight(10); //Thickness of the star
+            //Lines used to form the star
+            line(80, 400, 200, 0);
+            line(200, 0, 320, 400);
+            line(320, 400, 0, 160);
+            line(0, 160, 400, 160);
+            line(400, 160, 80, 400);
+
+        }
+
+        function mouseMoved() {
+
+            //Mickey Mouse Shape
+            ellipse(mouseX + 25, mouseY - 25, 30, 30); //Right ear
+            ellipse(mouseX - 25, mouseY - 25, 30, 30); //Left ear
+            ellipse(mouseX, mouseY, 50, 50); //Head
+
+            fill(random(100, 250), random(100, 250), 250) //Color of the Mickey Mouse Shape
+
+        }
+
+        function keyPressed() {
+            background(255); //Blank background(White)
+            stroke(0); //Black
+            if (keyCode === LEFT_ARROW) { //When left arrow is clicked
+                stroke(255); //Color of the lines(white)
+            }
+            else if (keyCode === RIGHT_ARROW) { //When right arrow is clicked
+                stroke(random(255), random(255), random(255)); //Color of the lines(random)
+            }
+        }
+
+        function mousePressed() {
+            strokeWeight(random(0.01, 2)); //Lines thickness
+
+        }
+
+        function mouseDragged() {
+            //Lines connected to each point on the star
+            line(80, 400, mouseX, mouseY);
+            line(200, 0, mouseX, mouseY);
+            line(320, 400, mouseX, mouseY);
+            line(0, 160, mouseX, mouseY);
+            line(400, 160, mouseX, mouseY);
+
+        }
+
+        function mouseReleased() {
+            //Background change after mouse is let go
+            background(random(100, 250), random(100, 250), random(100, 250)); //Random background color
+        }
+    </script>
+</head>
+
+<body>
+
+</body>
+
+</html>
