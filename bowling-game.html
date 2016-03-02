@@ -1,0 +1,165 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+
+<head>
+    <title>Bowling Game</title>
+    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.4.13/addons/p5.dom.js"></script>-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.4.13/p5.js"></script>
+    <script>
+        var ballX = 200;//
+        var ballY = 570;
+        var ballSpeedY = 0;
+        var userNum = 200;
+        var pins = [];
+        var scoreNum = 0;
+        var livesNum = 3;
+
+        function setup() {
+            createCanvas(400, 570);
+            createPins();
+        }
+
+        function draw() {
+            background(255, 223, 102);
+            startLine();
+            courtLayout();
+            score();
+            lives();
+            pinsCollision();
+            bowlingBall();
+            ballMove();
+            ballReturn();
+            endGame();
+            smooth();
+            subtractLives();
+        }
+
+        function subtractLives() {
+            if (ballY == 5) {
+                livesNum--;
+            }
+        }
+
+        function endGame() {
+            if (livesNum <= 0) {
+                livesNum = 0
+                if (livesNum == 0) {
+                    fill(255, 0, 0);
+                    textSize(25);
+                    textAlign(CENTER);
+                    text("GAME OVER!", 200, 300);
+                    noLoop();
+                }
+
+            }
+
+
+        }
+
+        function ballReturn() {
+            if (ballY <= 0) {
+                ballY = 570;
+                ballSpeedY = 0;
+
+            }
+        }
+
+        function pinsCollision() {
+
+            for (var i = 0; i < pins.length; i++) {
+                pins[i].display();
+                if (ballX < pins[i].x + 25 && ballX > pins[i].x - 25 && ballY < pins[i].y + 25 && ballY > pins[i].y - 25) {
+                    pins.splice(i, 1);
+                    scoreNum++;
+
+
+
+                }
+            }
+        }
+
+        function score() {
+            fill(255, 0, 0);
+            textSize(20);
+            text("Score: " + scoreNum, 50, 450);
+        }
+
+        function lives() {
+            fill(255, 0, 0);
+            textSize(20);
+            text("Lives: " + livesNum, 50, 475);
+
+
+        }
+
+        function courtLayout() {
+            noStroke();
+            fill(150);
+            rect(0, 0, 50, height);
+            rect(width - 50, 0, 50, height);
+        }
+
+        function Pin(x, y) {
+            this.x = x;
+            this.y = y;
+            this.display = function() {
+                fill(255);
+                ellipse(this.x, this.y, 25, 25);
+            }
+        }
+
+        function createPins() {
+            for (var x = 125; x < 325; x += 50) {
+                pins.push(new Pin(x, 25));
+
+            }
+            for (var x = 150; x < 300; x += 50) {
+                pins.push(new Pin(x, 50));
+            }
+            for (var x = 175; x < 275; x += 50) {
+                pins.push(new Pin(x, 75));
+            }
+            for (var x = 200; x < 250; x += 50) {
+                pins.push(new Pin(x, 100));
+            }
+        }
+
+        function startLine() {
+            stroke(255, 0, 0);
+            strokeWeight(2.5);
+            line(50, 500, 350, 500);
+        }
+
+        function bowlingBall() {
+            ballX = userNum;
+            ballX = constrain(userNum, 0, width);
+            fill(255, 0, 0);
+            ellipse(ballX, ballY - 25, 50, 50);
+            fill(0);
+            ellipse(ballX - 6, ballY - 30, 5, 5);
+            ellipse(ballX + 6, ballY - 30, 5, 5);
+            ellipse(ballX, ballY - 15, 5, 5);
+
+        }
+
+        function ballMove() {
+            if (ballY > 560) {
+                userNum = mouseX;
+
+            }
+            if (ballY > 0) {
+                ballY -= ballSpeedY;
+            }
+        }
+
+        function mousePressed() {
+            ballSpeedY = 5;
+        }
+    </script>
+</head>
+
+<body>
+<form><input TYPE="button" onClick="history.go(0)" value="Reset"></form>
+</body>
+
+</html>
