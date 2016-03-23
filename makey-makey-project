@@ -102,6 +102,10 @@
 
 <body>
 
+
+<form><input TYPE="button" onClick="history.go(0)" value="Reset"></form>
+
+
 </body>
 
 </html>
