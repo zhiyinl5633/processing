@@ -1,0 +1,107 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+
+<head>
+    <title>Processing Template</title>
+    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.4.13/addons/p5.dom.js"></script>-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.4.13/p5.js"></script>
+    <script>
+        var x = 250;
+        var starts = false;
+        var r;
+        var g;
+        var b;
+
+        function setup() {
+            createCanvas(500, 500);
+
+
+        }
+
+        function draw() {
+            background(r, g, b)
+            drawRope();
+            goal();
+            winner();
+            startGame();
+            //console.log(x)
+        }
+
+        function startGame() {
+            if (starts == false) {
+                background(51, 204, 255);
+                textAlign(CENTER);
+                textSize(30);
+                fill(255);
+                text("Player 1: LEFT Arrow", width / 3, 100)
+                text("Player 2: RIGHT Arrow", 2 * width / 3, 200)
+                textSize(40);
+                text("Press SPACE to start!", width / 2, 350)
+            }
+
+        }
+
+        function winner() {
+            console.log(x);
+            if (x == 50 && starts == true) {
+                background(255, 0, 102);
+                fill(255)
+                textSize(50);
+                textAlign(CENTER);
+                text("Player 1 Won!", 250, 250)
+                noLoop();
+            }
+            else if (x == 450 && starts == true) {
+
+                background(0, 255, 204);
+                textAlign(CENTER);
+                textSize(50);
+                fill(255);
+                text("Player 2 Won!", 250, 250)
+                noLoop();
+            }
+        }
+
+
+
+        function goal() {
+            if (starts == true) {
+                x = constrain(x, 50, width - 50);
+                noStroke();
+                fill(255, 0, 0);
+                ellipse(x, height / 2, 100, 100)
+            }
+        }
+
+        function drawRope() {
+            if (starts == true) {
+                stroke(255);
+                strokeWeight(15)
+                line(0, height / 2, width, height / 2)
+            }
+        }
+
+        function keyPressed() {
+            if (key == " " && starts == false) {
+                r = random(100, 250);
+                g = random(100, 250);
+                b = random(100, 250);
+                starts = true;
+            }
+
+            if (keyCode == LEFT_ARROW && starts == true) {
+                x -= 10;
+
+            }
+            if (keyCode == RIGHT_ARROW && starts == true) {
+                x += 10;
+            }
+        }
+    </script>
+</head>
+
+<body>
+
+</body>
+
+</html>
